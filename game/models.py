@@ -1,4 +1,6 @@
 # Create your models here.
+from django.utils import timezone
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -37,7 +39,11 @@ class GameSession(models.Model):
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     completed = models.BooleanField(default=False)
-    time_taken = models.FloatField(null=True, blank=True)
-
+    
+    start_time = models.DateTimeField(default=timezone.now)
+    end_time = models.DateTimeField(null=True, blank=True)
+    
+    deliveries_made = models.IntegerField(default=0)
+ 
     def __str__(self):
         return f"{self.player.nickname} - {self.route.name}"
